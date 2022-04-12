@@ -3,12 +3,9 @@ import {
   View,
   Text,
   Image,
-  FlatList,
-  SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
   Dimensions,
-  LogBox,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import styles from './styles';
@@ -19,19 +16,16 @@ import {connect} from 'react-redux';
 const DetailsScreen = ({navigation, route, data}) => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(route.params.index);
-  const isFocused = useIsFocused();
   const [listData, setData] = useState([]);
 
   useEffect(() => {
     const items = [];
-    console.log('value',value,'data',data);
     data.map((item, index) => {
       if (index === value) {
         items.push(item);
       }
     });
     setData(items);
-    console.log('items', items);
     setLoading(false);
   }, [value]);
 
@@ -43,10 +37,10 @@ const DetailsScreen = ({navigation, route, data}) => {
         </View>
       )}
       {listData.length > 0 ? (
-        <View style={styles.listContainer}>
+        <View style={styles.listContainer2}>
           <View style={styles.boxContainer}>
             <View style={styles.item}>
-              <TouchableOpacity>
+              <TouchableOpacity >
                 <Image
                   source={{
                     uri: listData[0].image,
@@ -57,7 +51,8 @@ const DetailsScreen = ({navigation, route, data}) => {
               </TouchableOpacity>
               <View style={styles.name}>
                 <Text style={styles.itemText}>{listData[0].Brand}</Text>
-                {listData[0].Stars !== undefined && listData[0].Stars !== null ? (
+                {listData[0].Stars !== undefined &&
+                listData[0].Stars !== null ? (
                   <StarRating
                     rating={listData[0].Stars}
                     max={5}

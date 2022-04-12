@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  TouchableOpacity,FlatList,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
@@ -28,6 +28,7 @@ const UserScreen = ({navigation, route, data}) => {
     setLoading(false);
   }, []);
 
+
   return (
     <View style={styles.container}>
       {loading && (
@@ -35,49 +36,58 @@ const UserScreen = ({navigation, route, data}) => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
+      <View style={styles.nameView}>
+        <Text style={styles.itemText}>Name : Jithu Poul</Text>
+        <Text style={styles.itemText}>Age : 25</Text>
+      </View>
       {listData.length > 0 ? (
-        <View>
-          <View style={{margin:20}}>
-            <Text style={styles.itemText}>Name : Jithu Poul</Text>
-            <Text style={styles.itemText}>Age : 25</Text>
-          </View>
-          <View style={styles.listContainer}>
-            <View style={styles.boxContainer}>
-              <View style={styles.item}>
-                <TouchableOpacity>
-                  <Image
-                    source={{
-                      uri: listData[0].image,
-                    }}
-                    style={styles.itemPhoto2}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <View style={styles.name}>
-                  <Text style={styles.itemText}>{listData[0].Brand}</Text>
-                  {listData[0].Stars !== undefined &&
-                  listData[0].Stars !== null ? (
-                    <StarRating
-                      rating={listData[0].Stars}
-                      max={5}
-                      iconWidth={width * 0.03}
-                      iconHeight={width * 0.03}
+        <FlatList
+          data={listData}
+          extraData={listData}
+          initialNumToRender={5}
+          renderItem={({item, index}) => (
+            <View>
+              <View style={styles.listContainer2}>
+                <View style={styles.boxContainer}>
+                <View style={styles.item}>
+                  <TouchableOpacity>
+                    <Image
+                      source={{
+                        uri: item.image,
+                      }}
+                      style={styles.itemPhoto2}
+                      resizeMode="contain"
                     />
-                  ) : null}
-                </View>
-                <View style={styles.descStyle}>
-                  <Text style={styles.descriptionText}>
-                    {listData[0].Variety}
-                  </Text>
-                </View>
-                <View style={styles.name}>
-                  <Text style={styles.itemText2}>{listData[0].Country}</Text>
+                  </TouchableOpacity>
+                  <View style={styles.name}>
+                    <Text style={styles.itemText}>{item.Brand}</Text>
+                    {item.Stars !== undefined && item.Stars !== null ? (
+                      <StarRating
+                        rating={item.Stars}
+                        max={5}
+                        iconWidth={width * 0.03}
+                        iconHeight={width * 0.03}
+                      />
+                    ) : null}
+                  </View>
+                  <View style={styles.descStyle}>
+                    <Text style={styles.descriptionText}>{item.Variety}</Text>
+                  </View>
+                  <View style={styles.name}>
+                    <Text style={styles.itemText2}>{item.Country}</Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
+            </View>
+          )}
+          onEndReachedThreshold={0.2}
+        />
+      ) : (
+        <View style={styles.emptyContainer}>
+          <Text>No item selected...</Text>
         </View>
-      ) : null}
+      )}
     </View>
   );
 };

@@ -19,12 +19,15 @@ const {height, width} = Dimensions.get('window');
 import {saveData} from '../redux/actions/action';
 import {connect} from 'react-redux';
 import {SearchBar} from 'react-native-elements';
+import TabBar from './components/TabBar';
+import UserScreen from './UserScreen';
 
 const Dashboard = ({navigation, saveData}) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setrefreshing] = useState(false);
   const [value, setValue] = useState();
   const isFocused = useIsFocused();
+  const [tabId, setTabId] = useState(1);
   const [searchData, setSearchData] = useState();
   const [listData, setData] = useState([]);
   const [fullData, setfullData] = useState([]);
@@ -32,6 +35,8 @@ const Dashboard = ({navigation, saveData}) => {
   const [Empty, setEmpty] = useState(false);
 
   useEffect(() => {
+    LogBox.ignoreAllLogs(true);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     fetchResDetails();
     getImages();
   }, [isFocused]);
@@ -50,6 +55,14 @@ const Dashboard = ({navigation, saveData}) => {
     const img = await fetchImages();
     if (img !== '') {
       setImages(img);
+    }
+  };
+
+  const handleTab = id => {
+    if (id === '1') {
+      setTabId(1);
+    } else {
+      setTabId(2);
     }
   };
 
@@ -85,12 +98,13 @@ const Dashboard = ({navigation, saveData}) => {
   };
 
   const Selection = index => {
-    console.log('index', index);
     const data = [...fullData];
-    data[index].select = !data[index].select;
-    setfullData(data);
-    setSearchData(data);
-    saveData(data);
+    if (data !== '' && data !== undefined && data !== null) {
+      data[index].select = !data[index].select;
+      setfullData(data);
+      setSearchData(data);
+      saveData(data);
+    }
   };
 
   const onSearch = text => {
@@ -120,10 +134,6 @@ const Dashboard = ({navigation, saveData}) => {
     setSearchData(fullData);
     setValue('');
     setEmpty(false);
-  };
-
-  const userPage = () => {
-    navigation.navigate('UserScreen');
   };
   const renderItem = ({item, index}) => (
     <View style={styles.boxContainer}>
@@ -169,24 +179,24 @@ const Dashboard = ({navigation, saveData}) => {
 
   return (
     <View style={styles.container}>
-      {loading && (
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
       <View style={{width: '100%'}}>
         <SearchBar
           placeholder="Search by brand"
           onChangeText={onSearch}
           onCancel={() => onCancel()}
           value={value}
+          icon={{type: 'font-awesome', name: 'search'}}
+          clearIcon
         />
       </View>
-      <TouchableOpacity
-        style={styles.buttonContainer2}
-        onPress={() => userPage()}>
-        <Text style={styles.Text}>User Details</Text>
-      </TouchableOpacity>
+
+      <TabBar onTabPress={handleTab} />
+
+      {loading && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
 
       {fullData ? (
         <View style={styles.listContainer}>
@@ -194,7 +204,7 @@ const Dashboard = ({navigation, saveData}) => {
             <View>
               <Text>No Data...</Text>
             </View>
-          ) : (
+          ) : tabId === 1 ? (
             <FlatList
               numColumns={2}
               data={searchData}
@@ -202,11 +212,10 @@ const Dashboard = ({navigation, saveData}) => {
               initialNumToRender={5}
               renderItem={(item, index) => renderItem(item, index)}
               showsHorizontalScrollIndicator={false}
-              onEndReachedThreshold={0.2}
-              //   ListFooterComponent={renderFooter}
-              //   onEndReached={handleRefresh}
             />
-          )}
+          ) : tabId === 2 ? (
+            <UserScreen />
+          ) : null}
         </View>
       ) : null}
     </View>

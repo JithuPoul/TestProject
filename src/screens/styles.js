@@ -1,17 +1,16 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    alignItems:'center'
   },
- buttonContainer: {
+  buttonContainer: {
     marginTop: height * 0.002,
     width: width * 0.2,
-    height: height * 0.035,
+    // height: height * 0.035,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   buttonContainer2: {
     marginTop: height * 0.03,
     width: width * 0.5,
-    height: height * 0.035,
+    // height: height * 0.035,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
@@ -37,8 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-    margin:height*0.01,
-    borderRadius:10,
+    margin: height * 0.01,
+    borderRadius: 10,
   },
   item: {
     margin: width * 0.02,
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   itemPhoto2: {
-    width: width *0.9,
+    width: width * 0.9,
     height: height * 0.3,
     backgroundColor: '#ededed',
     borderRadius: 5,
@@ -66,16 +65,13 @@ const styles = StyleSheet.create({
     marginTop: height * 0.01,
     flex: 1,
   },
-  emptyContainer:{
-    width:width*1,
-    height:height*1,
-    alignItems:'center',
-    justifyContent:'center'
+  listContainer2: {
+    marginVertical: height * 0.02,
   },
-  sectionHeader: {
-    fontSize: height * 0.032,
-    color: 'black',
-    fontFamily: 'Montserrat-Bold',
+  emptyContainer: {
+    margin: width * 0.04,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   badgeStyle: {
     position: 'absolute',
@@ -85,14 +81,17 @@ const styles = StyleSheet.create({
   name: {
     height: height * 0.06,
     width: width * 0.42,
-    alignItems:'flex-start',
+    alignItems: 'flex-start',
+  },
+  nameView: {
+    marginVertical: width * 0.03,
+    marginHorizontal: width * 0.03,
   },
   loaderContainer: {
-    height: height * 0.6,
+    height: height * 1,
     width: width * 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    // backgroundColor: 'rgba(52, 52, 52, 0.03)',
     borderRadius: 10,
   },
   indicator: {
@@ -120,21 +119,19 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: width * 0.4,
     textAlign: 'left',
-    fontFamily: 'Montserrat-Regular',
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
-  itemText2:{
+  itemText2: {
     color: '#FAA311',
     marginTop: 5,
     width: width * 0.4,
     textAlign: 'left',
-    fontFamily: 'Montserrat-Regular',
   },
-  descStyle:{
-    paddingVertical:width*0.02,
+  descStyle: {
+    paddingVertical: width * 0.02,
   },
   descriptionText: {
-    color:'black',
+    color: 'black',
     marginTop: 2,
     width: width * 0.42,
     textAlign: 'left',
