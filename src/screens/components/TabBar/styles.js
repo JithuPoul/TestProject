@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.15,
   },
   label: {
-    fontSize: height * 0.03,
+    fontSize: width * 0.04,
     color: '#9196b5',
     fontFamily: 'Montserrat-Regular',
   },

@@ -100,10 +100,13 @@ const Dashboard = ({navigation, saveData}) => {
   const Selection = index => {
     const data = [...fullData];
     if (data !== '' && data !== undefined && data !== null) {
-      data[index].select = !data[index].select;
-      setfullData(data);
-      setSearchData(data);
-      saveData(data);
+      console.log('data[index]', data[index]);
+      if (data[index] !== undefined) {
+        data[index].select = !data[index].select;
+        setfullData(data);
+        setSearchData(data);
+        saveData(data);
+      }
     }
   };
 
